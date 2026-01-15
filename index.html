@@ -26,20 +26,24 @@
         const { useState, useEffect } = React;
 
         // -----------------------------------------------------------------------------
-        // 0. 內建圖標元件 (移除外部依賴以避免錯誤)
+        // 0. 內建圖標元件 (移除外部依賴以確保 GitHub Pages 可執行)
         // -----------------------------------------------------------------------------
         const Icons = {
             Brain: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>,
             Compass: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>,
+            Layers: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>,
             Home: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
             Grid: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>,
             Flag: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>,
             ChevronLeft: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m15 18-6-6 6-6"/></svg>,
             ChevronRight: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m9 18 6-6-6-6"/></svg>,
             Award: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>,
-            Tag: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94 .94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>,
             XCircle: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>,
-            RotateCcw: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            CheckCircle: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>,
+            RotateCcw: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>,
+            BookOpen: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
+            Zap: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+            Tag: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94 .94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
         };
 
         // -----------------------------------------------------------------------------
@@ -110,6 +114,37 @@
                         explanation: '文中以白天鵝為例，說明過往經驗(看過無數白天鵝)無法概括全體(推翻所有天鵝皆白)，故選A。'
                     }
                 ]
+            },
+            {
+                id: 'real_gs_4',
+                type: 'multi',
+                category: '語病判斷',
+                text: '下列文句，沒有語病或邏輯矛盾的是：',
+                options: [
+                    '這場演唱會的聽眾大約有三萬人左右。',
+                    '即使明天會下雨，我們也要準時出發。',
+                    '他的作品獨樹一幟，充滿了獨特的個人風格。',
+                    '為了避免不再發生類似的錯誤，我們必須檢討。',
+                    '這本書的作者是我國唐朝著名的詩人李白寫的。'
+                ],
+                correctAnswer: [1, 2],
+                explanation: 'A. 「大約」與「左右」重複； B. 正確； C. 正確； D. 「避免」與「不再」造成雙重否定(變成避免不發生=希望發生)，應刪去「不」； E. 「作者是...」與「...寫的」句式雜揉。',
+                difficulty: '中'
+            },
+            {
+                id: 'real_gs_5',
+                type: 'single',
+                category: '修辭分析',
+                text: '「那雙眼睛，如秋水般清澈，又似寒星般孤傲。」這句話主要使用了哪種修辭技巧？',
+                options: [
+                    '譬喻',
+                    '轉化',
+                    '誇飾',
+                    '借代'
+                ],
+                correctAnswer: [0],
+                explanation: '使用了喻詞「如」、「似」，將眼睛比喻為秋水、寒星，屬於譬喻(明喻)。',
+                difficulty: '易'
             }
         ];
 
@@ -167,7 +202,7 @@
             { type: '一面對兩面', q: '這場比賽能否獲勝，關鍵在於隊員的努力。', ans: '「能否」是兩面，「努力」是一面。', correct: '這場比賽能否獲勝，關鍵在於隊員是否努力。' },
             { type: '關聯詞誤用', q: '既然天氣這麼好，但是我們還是去爬山吧。', ans: '「既然」應搭配「就」，「但是」表轉折不合語意。', correct: '既然天氣這麼好，我們就去爬山吧。' },
             { type: '修飾語多餘', q: '他那雙眼睛炯炯有神地注視著前方。', ans: '「炯炯有神」本身已含注視態，或形容眼睛，作狀語稍顯累贅。', correct: '他炯炯有神地注視著前方。' },
-            { type: '敬詞誤用', q: '歡迎蒞臨寒舍，這是我的榮幸。', ans: '「蒞臨」用於貴賓，「寒舍」為自謙，搭配尚可。', correct: '請您指教我的作品。' }
+            { type: '敬詞誤用', q: '歡迎蒞臨寒舍，這是我的榮幸。', ans: '「蒞臨」用於貴賓，「寒舍」為自謙，搭配尚可，但若說「請您拜讀我的作品」則誤用。', correct: '請您指教我的作品。' }
         ];
 
         const REORDER_TEMPLATES = [
@@ -494,12 +529,12 @@
                 );
             }
 
-            // 安全檢查：確保 q 存在
             const q = questions[currentQuestionIndex];
             if (!q) return <div className="flex items-center justify-center h-full text-xl font-bold text-gray-500">載入題庫中...</div>;
 
             const isMulti = q.type === 'multi' || (q.correctAnswer && q.correctAnswer.length > 1);
             const currentAns = userAnswers[q.id] || [];
+            const isMarked = markedQuestions.has(q.id);
             
             return (
                 <div className="flex flex-col h-full bg-slate-50 relative">
